@@ -5,26 +5,26 @@
 
 class AUList {
 public:
-  AUList();
+    AUList();
 
-  void MakeEmpty();
-  bool IsFull() const;
-  int GetLength() const;
-  int GetItem(int);
-  void PutItem(int);
-  void DeleteItem(int);
-  void ResetList();
-  void PrintList();
-  int GetNextItem();
+    void MakeEmpty();
+    bool IsFull() const;
+    int GetLength() const;
+    int GetItem(int); // returns index of item or -1
+    void PutItem(int);
+    void DeleteItem(int);
+    void ResetList();
+    void PrintList();
+    int GetNextItem();
 
-  int getMin();              // Added
-  int getRange();            // Added
-  AUList DuplicateSE(int first, int last); // Added
+    int getMin();
+    int getRange();
+    AUList DuplicateSE(int first, int last);
 
 private:
-  int length;
-  int ListItems[MAXSIZE];
-  int currentPos;
+    int length;
+    int ListItems[MAXSIZE];
+    int currentPos;
 };
 
 #endif
