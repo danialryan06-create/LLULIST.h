@@ -11,18 +11,14 @@ LLUList::LLUList() {
   ListStart=NULL;   
 } 
  
-LLUList::~LLUList() { 
-  //Note: The destructor can have compability issues with the assignment operator in 
-returns.  It is recommended for HW #1 that you keep the code commented out  
- /* 
-  LNode* tempPtr;  
- while (ListStart != NULL) { 
-    tempPtr = ListStart; 
-    ListStart = ListStart->next; 
-    delete tempPtr; 
-  } 
-  */ 
-} 
+LLUList::~LLUList() {
+  LNode* tempPtr;
+  while (ListStart != NULL) {
+    tempPtr = ListStart;
+    ListStart = ListStart->next;
+    delete tempPtr;
+  }
+}
  
 bool LLUList::IsFull() const { 
   LNode* testNode; 
@@ -81,23 +77,29 @@ void LLUList::PutItem(int newitem) {
  ListStart = newNode; // Redirect start of list 
 } 
  
-void LLUList::DeleteItem(int ditem) { //A little bit tricky because we need to "scout 
-ahead" and relink the object 
-                              //before the deleted object to the one after.  
- LNode *tmpNode, *nodeIter; 
-  if (ListStart->item == ditem) { 
-    tmpNode=ListStart; 
-    ListStart=ListStart->next; 
-  }  
- else{ 
-    nodeIter=ListStart; 
-    while ((nodeIter->next->item !=ditem))  
-     nodeIter=nodeIter->next; 
-    tmpNode=nodeIter->next; 
-    nodeIter->next=(nodeIter->next)->next;  
- } 
-  delete(tmpNode); 
-} 
+void LLUList::DeleteItem(int ditem) {
+  LNode *tmpNode, *nodeIter;
+
+  if (ListStart == nullptr) return;
+
+  if (ListStart->item == ditem) {
+    tmpNode = ListStart;
+    ListStart = ListStart->next;
+    delete tmpNode;
+    return;
+  }
+
+  nodeIter = ListStart;
+  while (nodeIter->next != nullptr && nodeIter->next->item != ditem)
+    nodeIter = nodeIter->next;
+
+  if (nodeIter->next == nullptr)
+    return; // Item not found
+
+  tmpNode = nodeIter->next;
+  nodeIter->next = nodeIter->next->next;
+  delete tmpNode;
+}
  
  
 void LLUList::ResetList() { 
