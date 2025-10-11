@@ -3,23 +3,24 @@
 
 class AUList {
 public:
-    AUList(int cap = 100);   // Constructor with default parameter
-    
-    void MakeEmpty();
-    bool IsFull() const;
-    int GetLength() const;
-    int GetItem(int gitem) const;
-    void PutItem(int item);
-    void DeleteItem(int item);
-    void ResetList();
-    int GetNextItem();
-    void PrintList() const;
-    AUList DuplicateSE(int first, int last) const;
+    AUList(int cap = 100);         // Constructor
+    void MakeEmpty();              // Empties the list
+    bool IsFull() const;           // Checks if full
+    int GetLength() const;         // Gets current length
+    int GetItem(int index);        // Gets item at index
+    void PutItem(int item);        // Adds item
+    void DeleteItem(int item);     // Deletes item
+    void ResetList();              // Prepares for iteration
+    int GetNextItem();             // Returns next item
+    void PrintList();              // Outputs list
+    int getMin();                  // Returns min value (NEW)
+    int getRange();                // Returns range (NEW)
+    AUList DuplicateSE(int start, int end); // Returns sublist
 
 private:
     int* items;
-    int length;
     int capacity;
+    int length;
     int currentPos;
 };
 
