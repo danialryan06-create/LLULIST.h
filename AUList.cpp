@@ -28,19 +28,19 @@ void AUList::MakeEmpty() {
 void AUList::PutItem(int item) {
   if (!IsFull()) {
     ListItems[length++] = item;
+  } else {
+    std::cerr << "Warning: Tried to insert into full list." << std::endl;
   }
 }
 
 void AUList::DeleteItem(int item) {
-  bool found = false;
-  for (int i = 0; i < length; i++) {
-    if (ListItems[i] == item)
-      found = true;
-    if (found && i < length - 1)
-      ListItems[i] = ListItems[i + 1];
+  int index = GetItem(item);
+  if (index == -1) return;
+
+  for (int i = index; i < length - 1; i++) {
+    ListItems[i] = ListItems[i + 1];
   }
-  if (found)
-    length--;
+  length--;
 }
 
 void AUList::ResetList() {
@@ -84,12 +84,14 @@ int AUList::getRange() {
 
   int minVal = ListItems[0];
   int maxVal = ListItems[0];
+
   for (int i = 1; i < length; i++) {
     if (ListItems[i] < minVal)
       minVal = ListItems[i];
     if (ListItems[i] > maxVal)
       maxVal = ListItems[i];
   }
+
   return maxVal - minVal;
 }
 
