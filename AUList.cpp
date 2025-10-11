@@ -67,34 +67,38 @@ void AUList::PrintList() {
 }
 
 int AUList::getMin() {
-    if (length == 0)
-        return -1;
+    if (length == 0) {
+        // Handle empty list, could throw or return a sentinel value
+        return -1; // Assuming -1 means empty list or no min
+    }
 
     int minVal = ListItems[0];
     for (int i = 1; i < length; i++) {
-        if (ListItems[i] < minVal)
+        if (ListItems[i] < minVal) {
             minVal = ListItems[i];
+        }
     }
     return minVal;
 }
 
 int AUList::getRange() {
-    if (length == 0)
-        return -1;
+    if (length == 0) {
+        // Handle empty list, no range possible
+        return -1; 
+    }
 
     int minVal = ListItems[0];
     int maxVal = ListItems[0];
-
     for (int i = 1; i < length; i++) {
-        if (ListItems[i] < minVal)
+        if (ListItems[i] < minVal) {
             minVal = ListItems[i];
-        if (ListItems[i] > maxVal)
+        }
+        if (ListItems[i] > maxVal) {
             maxVal = ListItems[i];
+        }
     }
-
     return maxVal - minVal;
 }
-
 AUList AUList::DuplicateSE(int first, int last) {
     AUList newList;
 
