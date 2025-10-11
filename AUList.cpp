@@ -69,55 +69,51 @@ void AUList::PrintList() { //simple function to print a list's items in stored o
   std::cout<<")"<<std::endl; 
 } 
  
-int AUList::getMin() { 
-   if (length == 0) { 
-     std::cerr << "Error: List is empty." << std::endl; 
-     return -1; 
-    } 
- 
-   int minVal = ListItems[0]; 
-   for (int i = 1; i < length; i++) { 
-     if (ListItems[i] < minVal) { 
-       minVal = ListItems[i]; 
-       } 
-     } 
-     return minVal 
-} 
- 
-int AUList::getRange() { 
-   if (length == 0) { 
-     std::cerr << "Error: List is empty." << std::endL; 
-     return -1; 
-   } 
- 
-   int minVal = ListItems[0]; 
-   int maxVal = ListItems[0]; 
- 
-   for (int i = 1; i < length; i++) { 
-     if (ListItems[i] < minVal) 
-       minVal = ListItems[i]; 
-     if (ListItems[i] > maxVal) 
-       maxVal = ListItems[i]; 
-   } 
- 
-   return maxVal - minVal; 
-} 
- 
-AUList AUList::DuplicateSE(int first, int last) { 
-  AUList newList; 
- 
-  if (first < 0 || last >= length || first > last) { 
-    std::cerr << "Error: Invalid range in DuplicateSE." << std::endl; 
-    return newList; 
-  } 
- 
-  for (int i = first; i <= last; i++) { 
-    if (newList.IsFill()) { 
-      std::cerr << "Warning: Reached max capacity in DuplicateSE." << std::endl; 
-      break; 
-    } 
-    newList.PutItem(ListItems[i]); 
-  } 
- 
-  return newList; 
-} 
+int AUList::getMin() {
+   if (length == 0) {
+     std::cerr << "Error: List is empty." << std::endl;
+     return -1;
+   }
+   int minVal = ListItems[0];
+   for (int i = 1; i < length; i++) {
+     if (ListItems[i] < minVal)
+       minVal = ListItems[i];
+   }
+   return minVal;
+}
+
+int AUList::getRange() {
+   if (length == 0) {
+     std::cerr << "Error: List is empty." << std::endl;
+     return -1;
+   }
+
+   int minVal = ListItems[0];
+   int maxVal = ListItems[0];
+   for (int i = 1; i < length; i++) {
+     if (ListItems[i] < minVal)
+       minVal = ListItems[i];
+     if (ListItems[i] > maxVal)
+       maxVal = ListItems[i];
+   }
+   return maxVal - minVal;
+}
+
+AUList AUList::DuplicateSE(int first, int last) {
+  AUList newList;
+
+  if (first < 0 || last >= length || first > last) {
+    std::cerr << "Error: Invalid range in DuplicateSE." << std::endl;
+    return newList;
+  }
+
+  for (int i = first; i <= last; i++) {
+    if (newList.IsFull()) {
+      std::cerr << "Warning: Reached max capacity in DuplicateSE." << std::endl;
+      break;
+    }
+    newList.PutItem(ListItems[i]);
+  }
+
+  return newList;
+}
