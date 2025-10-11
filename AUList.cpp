@@ -27,16 +27,18 @@ int AUList::GetItem(int gitem) {
 }
 
 void AUList::PutItem(int item) {
-    if (IsFull()) {
-        std::cerr << "PutItem error: list is full.\n";
-        return;
+    if (!IsFull()) {
+        ListItems[length] = item;
+        length++;
+    } else {
+        std::cerr << "PutItem error: list is full." << std::endl;
     }
-    ListItems[length++] = item;
 }
 
 void AUList::DeleteItem(int item) {
     int index = GetItem(item);
-    if (index == -1) return;
+    if (index == -1)
+        return;
 
     for (int i = index; i < length - 1; i++) {
         ListItems[i] = ListItems[i + 1];
@@ -53,7 +55,7 @@ int AUList::GetNextItem() {
     if (currentPos < length)
         return ListItems[currentPos];
     else {
-        std::cerr << "GetNextItem error: end of list.\n";
+        std::cerr << "GetNextItem error: end of list." << std::endl;
         return -1;
     }
 }
@@ -68,23 +70,26 @@ void AUList::PrintList() {
     std::cout << ")" << std::endl;
 }
 
+// ✅ Fixed getMin
 int AUList::getMin() {
     if (length == 0) {
-        std::cerr << "getMin error: list is empty.\n";
+        std::cerr << "Error: List is empty." << std::endl;
         return -1;
     }
 
     int minVal = ListItems[0];
     for (int i = 1; i < length; i++) {
-        if (ListItems[i] < minVal)
+        if (ListItems[i] < minVal) {
             minVal = ListItems[i];
+        }
     }
     return minVal;
 }
 
+// ✅ Fixed getRange
 int AUList::getRange() {
     if (length == 0) {
-        std::cerr << "getRange error: list is empty.\n";
+        std::cerr << "Error: List is empty." << std::endl;
         return -1;
     }
 
@@ -101,17 +106,18 @@ int AUList::getRange() {
     return maxVal - minVal;
 }
 
+// ✅ Fully working DuplicateSE
 AUList AUList::DuplicateSE(int first, int last) {
     AUList newList;
 
     if (first < 0 || last >= length || first > last) {
-        std::cerr << "DuplicateSE error: invalid range.\n";
+        std::cerr << "Error: Invalid range in DuplicateSE." << std::endl;
         return newList;
     }
 
     for (int i = first; i <= last; i++) {
         if (newList.IsFull()) {
-            std::cerr << "DuplicateSE warning: new list is full.\n";
+            std::cerr << "Warning: Reached max capacity in DuplicateSE." << std::endl;
             break;
         }
         newList.PutItem(ListItems[i]);
