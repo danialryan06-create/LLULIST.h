@@ -68,12 +68,11 @@ void AUList::PrintList() {
 
 int AUList::getMin() {
     if (length == 0) {
-        // Handle empty list, could throw or return a sentinel value
-        return -1; // Assuming -1 means empty list or no min
+        throw std::runtime_error("List is empty: cannot get minimum");
     }
 
     int minVal = ListItems[0];
-    for (int i = 1; i < length; i++) {
+    for (int i = 1; i < length; ++i) {
         if (ListItems[i] < minVal) {
             minVal = ListItems[i];
         }
@@ -83,13 +82,12 @@ int AUList::getMin() {
 
 int AUList::getRange() {
     if (length == 0) {
-        // Handle empty list, no range possible
-        return -1; 
+        throw std::runtime_error("List is empty: cannot get range");
     }
 
     int minVal = ListItems[0];
     int maxVal = ListItems[0];
-    for (int i = 1; i < length; i++) {
+    for (int i = 1; i < length; ++i) {
         if (ListItems[i] < minVal) {
             minVal = ListItems[i];
         }
