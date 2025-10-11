@@ -1,9 +1,9 @@
-#include <iostream>
 #include "AUList.h"
+#include <iostream>
 
-AUList::AUList() {
-    length = 0;
-    currentPos = -1;
+// Constructor with default capacity
+AUList::AUList(int cap) : capacity(cap), length(0), currentPos(-1) {
+    items = new int[capacity];
 }
 
 void AUList::MakeEmpty() {
@@ -11,37 +11,39 @@ void AUList::MakeEmpty() {
 }
 
 bool AUList::IsFull() const {
-    return length == MAXSIZE;
+    return length == capacity;
 }
 
 int AUList::GetLength() const {
     return length;
 }
 
-int AUList::GetItem(int gitem) {
-    for (int i = 0; i < length; i++) {
-        if (ListItems[i] == gitem)
-            return i;
-    }
-    return -1;
+int AUList::GetItem(int gitem) const {
+    if (gitem >= 0 && gitem < length)
+        return items[gitem];
+    // Handle error if needed
+    return -1; // or throw exception
 }
 
 void AUList::PutItem(int item) {
     if (!IsFull()) {
-        ListItems[length] = item;
+        items[length] = item;
         length++;
     }
+    // else handle overflow
 }
 
 void AUList::DeleteItem(int item) {
-    int index = GetItem(item);
-    if (index == -1)
-        return;
-
-    for (int i = index; i < length - 1; i++) {
-        ListItems[i] = ListItems[i + 1];
+    for (int i = 0; i < length; i++) {
+        if (items[i] == item) {
+            // Shift left remaining items
+            for (int j = i; j < length - 1; j++) {
+                items[j] = items[j + 1];
+            }
+            length--;
+            break;
+        }
     }
-    length--;
 }
 
 void AUList::ResetList() {
@@ -51,61 +53,22 @@ void AUList::ResetList() {
 int AUList::GetNextItem() {
     currentPos++;
     if (currentPos < length)
-        return ListItems[currentPos];
+        return items[currentPos];
     else
-        return -1;
+        return -1; // or handle end of list
 }
 
-void AUList::PrintList() {
-    std::cout << "(";
+void AUList::PrintList() const {
     for (int i = 0; i < length; i++) {
-        std::cout << ListItems[i];
-        if (i < length - 1)
-            std::cout << ", ";
+        std::cout << items[i] << " ";
     }
-    std::cout << ")" << std::endl;
+    std::cout << std::endl;
 }
 
-int AUList::getMin() {
-    if (length == 0) {
-        throw std::runtime_error("List is empty: cannot get minimum");
+AUList AUList::DuplicateSE(int first, int last) const {
+    AUList newList(last - first + 1);
+    for (int i = first; i <= last && i < length; i++) {
+        newList.PutItem(items[i]);
     }
-
-    int minVal = ListItems[0];
-    for (int i = 1; i < length; ++i) {
-        if (ListItems[i] < minVal) {
-            minVal = ListItems[i];
-        }
-    }
-    return minVal;
-}
-
-int AUList::getRange() {
-    if (length == 0) {
-        throw std::runtime_error("List is empty: cannot get range");
-    }
-
-    int minVal = ListItems[0];
-    int maxVal = ListItems[0];
-    for (int i = 1; i < length; ++i) {
-        if (ListItems[i] < minVal) {
-            minVal = ListItems[i];
-        }
-        if (ListItems[i] > maxVal) {
-            maxVal = ListItems[i];
-        }
-    }
-    return maxVal - minVal;
-}
-AUList AUList::DuplicateSE(int first, int last) {
-    AUList newList;
-
-    if (first < 0 || last >= length || first > last)
-        return newList;
-
-    for (int i = first; i <= last && !newList.IsFull(); i++) {
-        newList.PutItem(ListItems[i]);
-    }
-
     return newList;
 }
