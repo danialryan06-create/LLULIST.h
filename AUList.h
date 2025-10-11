@@ -10,16 +10,15 @@ public:
     void MakeEmpty();
     bool IsFull() const;
     int GetLength() const;
-    int GetItem(int); // Returns index of item or -1
+    int GetItem(int);
     void PutItem(int);
     void DeleteItem(int);
     void ResetList();
     void PrintList();
     int GetNextItem();
-
-    int getMin();         
-    int getRange();        
-    AUList DuplicateSE(int first, int last);  
+    int getMin();
+    int getRange();
+    AUList DuplicateSE(int first, int last);
 
 private:
     int length;
